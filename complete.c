@@ -1,16 +1,20 @@
-/*
+/*  $Revision: 1.5 $
+**
 **  History and file completion functions for editline library.
 */
 #include "editline.h"
+
 
 /*
 **  strcmp-like sorting predicate for qsort.
 */
 STATIC int
-compare(const void* p1, const void* p2)
+compare(p1, p2)
+    const void	*p1;
+    const void	*p2;
 {
-    char* const * v1;
-    char* const * v2;
+    char * const *v1;
+    char * const *v2;
 
     v1 = (char * const *)p1;
     v2 = (char * const *)p2;
@@ -22,10 +26,13 @@ compare(const void* p1, const void* p2)
 **  Ignore . and .. .
 */
 STATIC int
-FindMatches(char* dir, char* file, char ***avp)
+FindMatches(dir, file, avp)
+    char	*dir;
+    char	*file;
+    char	***avp;
 {
-    char** av;
-    char** new;
+    char	**av;
+    char	**new;
     char	*p;
     DIR		*dp;
     DIRENTRY	*ep;
@@ -74,7 +81,10 @@ FindMatches(char* dir, char* file, char ***avp)
 **  Split a pathname into allocated directory and trailing filename parts.
 */
 STATIC int
-SplitPath(char* path, char** dirpart, char** filepart)
+SplitPath(path, dirpart, filepart)
+    char	*path;
+    char	**dirpart;
+    char	**filepart;
 {
     static char	DOT[] = ".";
     char	*dpart;
@@ -107,7 +117,9 @@ SplitPath(char* path, char** dirpart, char** filepart)
 **  Fill in *unique if we completed it, or set it to 0 if ambiguous.
 */
 char *
-rl_complete(char* pathname, int* unique)
+rl_complete(pathname, unique)
+    char	*pathname;
+    int		*unique;
 {
     char	**av;
     char	*dir;
@@ -174,7 +186,9 @@ breakout:
 **  Return all possible completions.
 */
 int
-rl_list_possib(char* pathname, char*** avp)
+rl_list_possib(pathname, avp)
+    char	*pathname;
+    char	***avp;
 {
     char	*dir;
     char	*file;

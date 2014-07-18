@@ -1,13 +1,14 @@
-/*
+/*  $Revision: 1.12 $
+**
 **  Main editing routines for editline library.
 */
-#include "editline.h"
 #include <string.h>
 #include <signal.h>
 #include <sys/types.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "editline.h"
 
 /*
 **  Manifest constants.
@@ -128,7 +129,8 @@ TTYflush()
 }
 
 STATIC void
-TTYput(const CHAR c)
+TTYput(c)
+    const CHAR	c;
 {
     Screen[ScreenCount] = c;
     if (++ScreenCount >= ScreenSize - 1) {
@@ -138,14 +140,16 @@ TTYput(const CHAR c)
 }
 
 STATIC void
-TTYputs(STRING p)
+TTYputs(p)
+    STRING	p;
 {
     while (*p)
 	TTYput(*p++);
 }
 
 STATIC void
-TTYshow(CHAR c)
+TTYshow(c)
+    CHAR	c;
 {
     if (c == DEL) {
 	TTYput('^');
@@ -168,14 +172,15 @@ TTYshow(CHAR c)
 }
 
 STATIC void
-TTYstring(CHAR* p)
+TTYstring(p)
+    CHAR	*p;
 {
     while (*p)
 	TTYshow(*p++);
 }
 
 STATIC unsigned int
-TTYget(void)
+TTYget()
 {
     CHAR	c;
 
@@ -192,7 +197,8 @@ TTYget(void)
 #define TTYback()	(backspace ? TTYputs((STRING)backspace) : TTYput('\b'))
 
 STATIC void
-TTYbackn(int n)
+TTYbackn(n)
+    int		n;
 {
     while (--n >= 0)
 	TTYback();
